@@ -1,0 +1,9 @@
+gradlew
+gradle/
+build.gradle\
+local.properties
+settings.gradle
+gradlew.bat
+build.gradle
+gradle.properties
+app/build
