@@ -4,8 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
-import com.lad.weatherlty.MainActivity;
-import com.lad.weatherlty.R;
+import com.lad.weatherly.MainActivity;
 
 import java.util.ArrayList;
 import java.util.Date;
