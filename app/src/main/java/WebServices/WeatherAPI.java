@@ -11,6 +11,8 @@ import retrofit2.http.Query;
 
 public class WeatherAPI {
 
+    private static final String X_RAPID_API_KEY="";
+    private static final String X_RAPID_API_HOST="";
     private static final String url="https://weatherapi-com.p.rapidapi.com/";
     private static final String weather="forecast.json?";
     private static  String location;
@@ -34,8 +36,8 @@ public class WeatherAPI {
     public interface WeatherService{
         @Headers({
                 "Content-Type: application/json",
-                "X-RapidAPI-Key: 746bb34e04msh758ce4be48a9319p19b422jsn1b2062089163",
-                "X-RapidAPI-Host: weatherapi-com.p.rapidapi.com"
+                "X-RapidAPI-Key: YOUR KEY",
+                "X-RapidAPI-Host: YOUR HOST"
         })
         @GET(weather)
         Call<Weather> getWeather(@Query("q") String location,

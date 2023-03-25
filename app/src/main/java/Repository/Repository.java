@@ -2,6 +2,7 @@ package Repository;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.lifecycle.LiveData;
 import com.lad.weatherly.MainActivity;
@@ -27,10 +28,12 @@ public class Repository implements RepoInterface, UpdateWeatherOnLocation {
 
     private WeatherDB database;
     private WeatherDAO DAO;
+    private Context context;
     public static RefreshBar myRefreshInterface;
 
     public Repository(Context context) {
 
+        this.context=context;
         MainActivity.setCallBackforLocation(this);
         database=WeatherDB.getWeatherDB(context);
         DAO= database.getWeatherDAO();
@@ -70,27 +73,30 @@ public class Repository implements RepoInterface, UpdateWeatherOnLocation {
 
                 showRefreshBar(false);
                 List<WeatherModel> temp= getWeatherData(weather);
-                ChartTempData templist;
 
-                templist= new ChartTempData(0,weather.getForecast().getForecastday().get(0).getHour());
+                ChartTempData today_temp_list=new ChartTempData(0,weather.getForecast().getForecastday().get(0).getHour());
+                ChartTempData tomorrow_temp_list=new ChartTempData(1,weather.getForecast().getForecastday().get(1).getHour());
 
                 if(DAO.getAllWeather().size()==0){
                     for(WeatherModel x:temp){
                         DAO.setWeather(x);
-                        DAO.setTemperatureList(templist);
                     }
+                    DAO.setTemperatureList(today_temp_list);
+                    DAO.setTemperatureList(tomorrow_temp_list);
                 }
                 else {
                     for (WeatherModel x : temp) {
                         DAO.UpdateWeather(x);
                     }
+                    DAO.UpdateTemplist(today_temp_list);
+                    DAO.UpdateTemplist(tomorrow_temp_list);
                 }
 
             }
 
             @Override
             public void onFailure(Call<Weather> call, Throwable t) {
-                Log.d("RETROFIT", "onFailure: "+t.getLocalizedMessage());
+                Toast.makeText(context, "Something went wrong.Please check internet connection.", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -187,9 +193,7 @@ public class Repository implements RepoInterface, UpdateWeatherOnLocation {
             showRefreshBar(true);
             UpdatetWeatherData(longitude,latitude);
         }
-
     }
-
 
     public void showRefreshBar(Boolean isShow){
         myRefreshInterface.onRefreshBar(isShow);

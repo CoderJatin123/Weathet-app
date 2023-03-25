@@ -35,6 +35,9 @@ public interface WeatherDAO{
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void setTemperatureList(ChartTempData data);
 
+    @Update
+    void UpdateTemplist(ChartTempData data);
+
     @Query("SELECT * FROM temperature_list")
     LiveData<List<ChartTempData>> getLiveTempList();
 

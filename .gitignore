@@ -1,6 +1,6 @@
 gradlew
-.gradle/
 gradle
+.gradle/
 build.gradle\
 local.properties
 settings.gradle
